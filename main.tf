@@ -30,7 +30,7 @@ resource "alicloud_vswitch" "vswitches" {
   count             = length(var.vswitch_ids) > 0 ? 0 : length(var.vswitch_cidrs)
   vpc_id            = var.vpc_id == "" ? join("", alicloud_vpc.vpc.*.id) : var.vpc_id
   cidr_block        = var.vswitch_cidrs[count.index]
-  availability_zone = data.alicloud_zones.default.zones[count.index % length(data.alicloud_zones.default.zones)]["id"]
+  availability_zone = var.zone_id == "" ?data.alicloud_zones.default.zones[count.index % length(data.alicloud_zones.default.zones)]["id"]: var.zone_id
   name = var.vswitch_name_prefix == "" ? format(
     "%s-%s",
     var.example_name,
@@ -46,6 +46,8 @@ resource "alicloud_nat_gateway" "default" {
   count  = var.new_nat_gateway == true ? 1 : 0
   vpc_id = var.vpc_id == "" ? join("", alicloud_vpc.vpc.*.id) : var.vpc_id
   name   = var.example_name
+  nat_type             = "Enhanced"
+  vswitch_id = alicloud_vswitch.vswitches.0.id
 }
 
 resource "alicloud_eip" "default" {

@@ -179,7 +179,7 @@ variable "k8s_service_cidr" {
 variable "k8s_version" {
   description = "The version of the kubernetes version.  Valid values: '1.16.6-aliyun.1','1.14.8-aliyun.1'. Default to '1.16.6-aliyun.1'."
   type        = string
-  default     = "1.16.6-aliyun.1"
+  default     = "1.18.8-aliyun.1"
 }
 
 variable "cluster_addons" {
@@ -189,4 +189,9 @@ variable "cluster_addons" {
     config = string
   }))
   default = []
+}
+
+variable "zone_id" {
+  description = "Availability Zone ID"
+  type = string
 }
