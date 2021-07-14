@@ -33,3 +33,27 @@ output "this_k8s_node_ids" {
   description = "List ids of of cluster node."
   value       = [for _, obj in concat(alicloud_cs_kubernetes.k8s.*.worker_nodes, [{}])[0] : lookup(obj,"id")]
 }
+
+output "connections" {
+  value = alicloud_cs_kubernetes.k8s.0.connections
+}
+
+output "certificate_authority" {
+  value = alicloud_cs_kubernetes.k8s.0.certificate_authority
+}
+
+output "cluster_ca_cert" {
+  value = alicloud_cs_kubernetes.k8s.0.certificate_authority.cluster_cert
+}
+
+output "client_cert" {
+  value = alicloud_cs_kubernetes.k8s.0.certificate_authority.client_cert
+}
+
+output "client_key" {
+  value = alicloud_cs_kubernetes.k8s.0.certificate_authority.client_key
+}
+
+output "api_server_internet" {
+  value = alicloud_cs_kubernetes.k8s.0.connections.api_server_internet
+}
