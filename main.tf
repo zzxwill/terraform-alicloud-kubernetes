@@ -95,6 +95,7 @@ resource "alicloud_cs_kubernetes" "k8s" {
   pod_cidr              = var.k8s_pod_cidr
   service_cidr          = var.k8s_service_cidr
   version               = var.k8s_version
+  kube_config = var.kube_config
   dynamic "addons" {
     for_each = var.cluster_addons
     content {

@@ -57,3 +57,11 @@ output "client_key" {
 output "api_server_internet" {
   value = alicloud_cs_kubernetes.k8s.0.connections.api_server_internet
 }
+
+output "name" {
+  value = alicloud_cs_kubernetes.k8s.0.name
+}
+
+output "kubeconfig" {
+  value = file(var.kube_config)
+}

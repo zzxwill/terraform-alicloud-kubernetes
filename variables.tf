@@ -195,3 +195,8 @@ variable "zone_id" {
   description = "Availability Zone ID"
   type = string
 }
+
+variable "kube_config" {
+  description = "Kubeconfig file path"
+  type = string
+}
