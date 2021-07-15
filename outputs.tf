@@ -63,5 +63,5 @@ output "name" {
 }
 
 output "kubeconfig" {
-  value = data.local_file.kubeconfig.content
+  value = file(local.kube_config)
 }

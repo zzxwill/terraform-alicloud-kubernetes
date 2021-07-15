@@ -1,11 +1,7 @@
 ######################
 # provider
 ######################
-variable "region" {
-  description = "The region used to launch this module resources."
-  type        = string
-  default     = ""
-}
+
 variable "profile" {
   description = "The profile name as set in the shared credentials file. If not set, it will be sourced from the ALICLOUD_PROFILE environment variable."
   type        = string
@@ -61,7 +57,7 @@ variable "vpc_id" {
 variable "example_name" {
   description = "The name as prefix used to create resources."
   type        = string
-  default     = "tf-example-kubernetes"
+  default     = ""
 }
 
 variable "vpc_cidr" {
@@ -194,10 +190,4 @@ variable "cluster_addons" {
 variable "zone_id" {
   description = "Availability Zone ID"
   type = string
-}
-
-variable "kube_config" {
-  description = "Kubeconfig file path"
-  type = string
-  default = "kubeconfig"
 }

@@ -2,7 +2,6 @@
 provider "alicloud" {
   profile                 = var.profile != "" ? var.profile : null
   shared_credentials_file = var.shared_credentials_file != "" ? var.shared_credentials_file : null
-  region                  = var.region
   skip_region_validation  = var.skip_region_validation
   configuration_source    = "terraform-alicloud-modules/kubernetes"
 }
@@ -69,12 +68,9 @@ resource "alicloud_snat_entry" "default" {
   depends_on        = [alicloud_eip_association.default]
 }
 
-resource "local_file" "kubeconfig" {
-  filename = var.kube_config
-}
-
-data "local_file" "kubeconfig" {
-  filename = var.kube_config
+locals {
+  // a local file `kubeconfig` has to be created before `terraform apply`
+  kube_config = "kubeconfig"
 }
 
 resource "alicloud_cs_kubernetes" "k8s" {
@@ -103,7 +99,7 @@ resource "alicloud_cs_kubernetes" "k8s" {
   pod_cidr              = var.k8s_pod_cidr
   service_cidr          = var.k8s_service_cidr
   version               = var.k8s_version
-  kube_config = var.kube_config
+  kube_config = local.kube_config
   dynamic "addons" {
     for_each = var.cluster_addons
     content {
@@ -111,5 +107,5 @@ resource "alicloud_cs_kubernetes" "k8s" {
       config = lookup(addons.value, "config", var.cluster_addons)
     }
   }
-  depends_on = [alicloud_snat_entry.default, local_file.kubeconfig]
+  depends_on = [alicloud_snat_entry.default]
 }
