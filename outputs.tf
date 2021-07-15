@@ -63,5 +63,5 @@ output "name" {
 }
 
 output "kubeconfig" {
-  value = file(alicloud_cs_kubernetes.k8s.0.kube_config)
+  value = data.local_file.kubeconfig.content
 }

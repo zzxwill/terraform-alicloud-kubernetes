@@ -73,6 +73,10 @@ resource "local_file" "kubeconfig" {
   filename = var.kube_config
 }
 
+data "local_file" "kubeconfig" {
+  filename = var.kube_config
+}
+
 resource "alicloud_cs_kubernetes" "k8s" {
   count = var.k8s_number
 
