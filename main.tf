@@ -69,6 +69,10 @@ resource "alicloud_snat_entry" "default" {
   depends_on        = [alicloud_eip_association.default]
 }
 
+resource "local_file" "kubeconfig" {
+  filename = var.kube_config
+}
+
 resource "alicloud_cs_kubernetes" "k8s" {
   count = var.k8s_number
 
@@ -103,5 +107,5 @@ resource "alicloud_cs_kubernetes" "k8s" {
       config = lookup(addons.value, "config", var.cluster_addons)
     }
   }
-  depends_on = [alicloud_snat_entry.default]
+  depends_on = [alicloud_snat_entry.default, local_file.kubeconfig]
 }

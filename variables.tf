@@ -199,4 +199,5 @@ variable "zone_id" {
 variable "kube_config" {
   description = "Kubeconfig file path"
   type = string
+  default = "kubeconfig"
 }
